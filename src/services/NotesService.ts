@@ -16,7 +16,7 @@ export class NotesService {
                 .then(res => res.json())
                 .then(data => {
                     this.notes = data.map((note: Note) => ({
-                        id: note.id,
+                        id: note._id,
                         title: note.title,
                         content: note.content,
                         createdAt: new Date(note.createdAt)
@@ -34,7 +34,7 @@ export class NotesService {
             const response = fetch(`${this.ApiUrl}/${id}`)
                 .then(res => res.json())
                 .then(data => ({
-                    id: data.id,
+                    _id: data._id,
                     title: data.title,
                     content: data.content,
                     createdAt: new Date(data.createdAt)
@@ -59,7 +59,7 @@ export class NotesService {
             })
             .then(res => res.json())
             .then(data => ({
-                id: data.id,
+                _id: data._id,
                 title: data.title,
                 content: data.content,
                 createdAt: new Date(data.createdAt)
@@ -78,7 +78,7 @@ export class NotesService {
     // Actualizar una nota existente
     async updateNote(note: Note): Promise<Note | undefined> {
         try {
-            const response = fetch(`${this.ApiUrl}/${note.id}`, {
+            const response = fetch(`${this.ApiUrl}/${note._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -87,13 +87,13 @@ export class NotesService {
             })
             .then(res => res.json())
             .then(data => ({
-                id: data.id,
+                _id: data._id,
                 title: data.title,
                 content: data.content,
                 createdAt: new Date(data.createdAt)
             }))
             .then(updatedNote => {
-                const index = this.notes.findIndex(n => n.id === updatedNote.id);
+                const index = this.notes.findIndex(n => n._id === updatedNote._id);
                 if (index !== -1) {
                     this.notes[index] = updatedNote;
                 }
@@ -114,13 +114,13 @@ export class NotesService {
             })
             .then(res => res.json())
             .then(data => ({
-                id: data.id,
+                _id: data._id,
                 title: data.title,
                 content: data.content,
                 createdAt: new Date(data.createdAt)
             }))
             .then(note => {
-                const index = this.notes.findIndex(n => n.id === note.id)
+                const index = this.notes.findIndex(n => n._id === note._id)
                 this.notes.splice(index, 1);
                 return note;
             })

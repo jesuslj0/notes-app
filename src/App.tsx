@@ -1,5 +1,6 @@
 import './App.css'
 import { Dashboard } from './Dashboard'
+import "remixicon/fonts/remixicon.css"
 
 function App() {
 
