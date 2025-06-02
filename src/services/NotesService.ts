@@ -1,7 +1,8 @@
 
-import { EmptyNote, type Note } from "../models";
+import { EmptyNote, type Note, type NoteData } from "../models";
 
 // Servicio para manejar las notas
+/*************  ✨ Windsurf Command 🌟  *************/
 export class NotesService {
     private notes: Note[] = [];
     private ApiUrl: string = "http://localhost:4000/api/notes";
@@ -12,17 +13,15 @@ export class NotesService {
 
     async getNotes(): Promise<Note[] | undefined> {
         try {
-            const response = fetch(this.ApiUrl)
-                .then(res => res.json())
-                .then(data => {
-                    this.notes = data.map((note: Note) => ({
-                        id: note._id,
-                        title: note.title,
-                        content: note.content,
-                        createdAt: new Date(note.createdAt)
-                    }))
-                }).then(() => this.notes);
-            return response;
+            const response = await fetch(this.ApiUrl);
+            const data = await response.json();
+            this.notes = data.map((note: Note) => ({
+                id: note.id,
+                title: note.title,
+                content: note.content,
+                createdAt: new Date(note.createdAt)
+            }));
+            return this.notes;
         } catch(err) {
             console.error("Error al obtener las notas:", err);
         }
@@ -31,103 +30,92 @@ export class NotesService {
     // Obtener una nota por ID
     async getNoteById(id: string): Promise<Note | undefined> {
         try {
-            const response = fetch(`${this.ApiUrl}/${id}`)
-                .then(res => res.json())
-                .then(data => ({
-                    _id: data._id,
-                    title: data.title,
-                    content: data.content,
-                    createdAt: new Date(data.createdAt)
-                }))
-                .then(note => note || undefined);
-            return response;
+            const response = await fetch(`${this.ApiUrl}/${id}`);
+            const data = await response.json();
+            return {
+                id: data.id,
+                title: data.title,
+                content: data.content,
+                createdAt: new Date(data.createdAt)
+            };
         } catch (err) {
             console.error("Error al obtener la nota:", err);
-            return Promise.resolve(undefined);
+            return undefined;
         }
     }
 
     // Crear una nueva nota
-    async createNote(note: Note): Promise<Note | undefined> {
+    async createNote({ title, content}: NoteData): Promise<Note | undefined> {
         try {
-            const response = fetch(this.ApiUrl, {
-                method: 'POST',
+            const response = await fetch(this.ApiUrl, {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(note)
-            })
-            .then(res => res.json())
-            .then(data => ({
-                _id: data._id,
+                body: JSON.stringify({ title, content })
+            });
+            const data = await response.json();
+            return {
+                id: data.id,
                 title: data.title,
                 content: data.content,
                 createdAt: new Date(data.createdAt)
-            }))
-            .then(newNote => {
-                this.notes.push(newNote);
-                return newNote;
-            });
-            return response;
+            };
         } catch (err) {
             console.error("Error al crear la nota:", err);
-            return Promise.resolve(undefined);
+            return undefined;
         }
     }
 
     // Actualizar una nota existente
-    async updateNote(note: Note): Promise<Note | undefined> {
+    async updateNote(id: string, { title, content }: NoteData): Promise<Note | undefined> {
         try {
-            const response = fetch(`${this.ApiUrl}/${note._id}`, {
-                method: 'PUT',
+            const response = await fetch(`${this.ApiUrl}/${id}`, {
+                method: "PUT",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(note)
-            })
-            .then(res => res.json())
-            .then(data => ({
-                _id: data._id,
+                body: JSON.stringify({ title: title, content: content })
+            });
+            const data = await response.json();
+            const updatedNote = {
+                id: data.id,
                 title: data.title,
                 content: data.content,
                 createdAt: new Date(data.createdAt)
-            }))
-            .then(updatedNote => {
-                const index = this.notes.findIndex(n => n._id === updatedNote._id);
-                if (index !== -1) {
-                    this.notes[index] = updatedNote;
-                }
-                return updatedNote;
-            });
-            return response;
+            };
+            const index = this.notes.findIndex(n => n.id === updatedNote.id);
+            if (index !== -1) {
+                this.notes[index] = updatedNote;
+            }
+            return updatedNote;
         } catch (err) {
             console.error("Error al actualizar la nota:", err);
-            return Promise.resolve(undefined);
+            return undefined;
         }
     }
 
     // Eliminar una nota
     async deleteNote(id: string): Promise<Note | undefined> {
         try {
-            const response = fetch(`${this.ApiUrl}/${id}`, {
+            const response = await fetch(`${this.ApiUrl}/${id}`, {
                 method: "DELETE"
-            })
-            .then(res => res.json())
-            .then(data => ({
-                _id: data._id,
+            });
+            const data = await response.json();
+            const note = {
+                id: data.id,
                 title: data.title,
                 content: data.content,
                 createdAt: new Date(data.createdAt)
-            }))
-            .then(note => {
-                const index = this.notes.findIndex(n => n._id === note._id)
+            };
+            const index = this.notes.findIndex(n => n.id === note.id);
+            if (index !== -1) {
                 this.notes.splice(index, 1);
-                return note;
-            })
-            return response;
+            }
+            return note;
         } catch(err) {
             console.log("Error al borrar la nota", err)
-            return Promise.resolve(undefined) 
+            return undefined; 
         }
     }
 }

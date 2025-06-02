@@ -1,4 +1,5 @@
 import './App.css'
+import { NotesContextProvider } from './context/NotesContext'
 import { Dashboard } from './Dashboard'
 import "remixicon/fonts/remixicon.css"
 
@@ -6,9 +7,9 @@ function App() {
 
   return (
     <>
-      <div>
+      <NotesContextProvider>
         <Dashboard />
-      </div>
+      </NotesContextProvider>
     </>
   )
 }

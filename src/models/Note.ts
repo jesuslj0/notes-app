@@ -1,13 +1,18 @@
 export interface Note {
-    _id: string;
+    id: string;
     title: string;
     content: string;
     createdAt: Date;
 }
 
 export const EmptyNote: Note = {
-    _id: '',
+    id: '',
     title: '',
     content: '',
     createdAt: new Date(),
+}
+
+export interface NoteData{
+    title: string;
+    content: string;
 }
