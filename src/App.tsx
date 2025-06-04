@@ -1,17 +1,22 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { NotesContextProvider } from './context/NotesContext'
-import { Dashboard } from './Dashboard'
 import "remixicon/fonts/remixicon.css"
+import { AuthRoutes } from './routes/AuthRoutes'
+import { PrivateRoutes } from './routes/PrivateRoutes'
 
 function App() {
-
   return (
-    <>
-      <NotesContextProvider>
-        <Dashboard />
-      </NotesContextProvider>
-    </>
-  )
+    <BrowserRouter>
+      <Routes> 
+        {/* Rutas públicas */}
+        <Route path="auth/*">
+          {AuthRoutes()} 
+        </Route>
+        {/* Rutas privadas */}
+        {PrivateRoutes()} 
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App

@@ -1,0 +1,44 @@
+[
+    {
+        "title": "Ideas para el blog",
+        "content": "Escribir sobre la experiencia usando Tailwind con Angular y cómo integrarlo con buenas prácticas.",
+        "createdAt": "2025-05-31T22:39:48.581Z",
+        "id": "6029bdd8-8b0e-4696-9ba8-29c2f1bda95f"
+    },
+    {
+        "title": "Tareas pendientes",
+        "content": "Finalizar backend del chat, probar autenticación JWT, y revisar el sistema de notificaciones.",
+        "createdAt": "2025-05-31T22:39:48.581Z",
+        "id": "f0fe093a-c6a3-47c8-8c3e-470d91228876"
+    },
+    {
+        "title": "Lecturas recomendadas",
+        "content": "Revisar documentación oficial de Socket.io y guías sobre rendimiento en React.",
+        "createdAt": "2025-05-31T22:39:48.581Z",
+        "id": "97a07edf-1763-4915-ad73-a18281cce71c"
+    },
+    {
+        "title": "Notas de la reunión",
+        "content": "Priorizar desarrollo del sistema de roles, revisar pull requests pendientes y asignar tareas del sprint.",
+        "createdAt": "2025-05-31T22:39:48.582Z",
+        "id": "9f6e8392-d4f8-4ee3-897b-470d15876025"
+    },
+    {
+        "title": "Ver nueva película",
+        "content": "El señor de los anillos V",
+        "createdAt": "2025-06-01T23:23:17.121Z",
+        "id": "23afa511-fcb5-4a28-9adf-366b80ad5fd1"
+    },
+    {
+        "title": "Crear nuevo proyecto",
+        "content": "Página de conversión de monedas y unidades y medidas.",
+        "createdAt": "2025-06-01T23:25:00.581Z",
+        "id": "ee7dead4-c7a1-4dd2-8ff4-708f321c5204"
+    },
+    {
+        "title": "Mi cuenta Google",
+        "content": "jesus@gmail.com, password: pass123",
+        "createdAt": "2025-06-02T00:39:40.544Z",
+        "id": "efb43c0f-18ef-483d-aedb-44e738d6b594"
+    }
+]

@@ -1,7 +1,7 @@
 import { EmptyNote, type Note } from "../../models";
 import { useEffect, useState } from "react";
 import { NotesService } from "../../services/NotesService";
-import { useNotes } from "../../context/useContext";
+import { useNotes } from "../../context/useNotes";
 
 interface Props {
     id?: string

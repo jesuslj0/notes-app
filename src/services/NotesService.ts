@@ -2,7 +2,6 @@
 import { EmptyNote, type Note, type NoteData } from "../models";
 
 // Servicio para manejar las notas
-/*************  ✨ Windsurf Command 🌟  *************/
 export class NotesService {
     private notes: Note[] = [];
     private ApiUrl: string = "http://localhost:4000/api/notes";
@@ -13,7 +12,10 @@ export class NotesService {
 
     async getNotes(): Promise<Note[] | undefined> {
         try {
-            const response = await fetch(this.ApiUrl);
+            const response = await fetch(this.ApiUrl, {
+                method: "GET",
+                credentials: 'include'
+            });
             const data = await response.json();
             this.notes = data.map((note: Note) => ({
                 id: note.id,
@@ -30,7 +32,10 @@ export class NotesService {
     // Obtener una nota por ID
     async getNoteById(id: string): Promise<Note | undefined> {
         try {
-            const response = await fetch(`${this.ApiUrl}/${id}`);
+            const response = await fetch(`${this.ApiUrl}/${id}`,{
+                method: "GET",
+                credentials: 'include'
+            });
             const data = await response.json();
             return {
                 id: data.id,
@@ -49,6 +54,7 @@ export class NotesService {
         try {
             const response = await fetch(this.ApiUrl, {
                 method: "POST",
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -72,6 +78,7 @@ export class NotesService {
         try {
             const response = await fetch(`${this.ApiUrl}/${id}`, {
                 method: "PUT",
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -99,7 +106,8 @@ export class NotesService {
     async deleteNote(id: string): Promise<Note | undefined> {
         try {
             const response = await fetch(`${this.ApiUrl}/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                credentials: 'include'
             });
             const data = await response.json();
             const note = {
