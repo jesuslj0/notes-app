@@ -21,7 +21,9 @@ export class NotesService {
                 id: note.id,
                 title: note.title,
                 content: note.content,
-                createdAt: new Date(note.createdAt)
+                isFixed: note.isFixed,
+                createdAt: new Date(note.createdAt),
+                updatedAt: note.updatedAt ? new Date(note.updatedAt) : new Date(),
             }));
             return this.notes;
         } catch(err) {
@@ -41,7 +43,9 @@ export class NotesService {
                 id: data.id,
                 title: data.title,
                 content: data.content,
-                createdAt: new Date(data.createdAt)
+                isFixed: data.isFixed,
+                createdAt: new Date(data.createdAt),
+                updatedAt: data.updatedAt ? new Date(data.updatedAt) : new Date(),
             };
         } catch (err) {
             console.error("Error al obtener la nota:", err);
@@ -50,7 +54,7 @@ export class NotesService {
     }
 
     // Crear una nueva nota
-    async createNote({ title, content}: NoteData): Promise<Note | undefined> {
+    async createNote({ title, content, isFixed, updatedAt = null }: NoteData): Promise<Note | undefined> {
         try {
             const response = await fetch(this.ApiUrl, {
                 method: "POST",
@@ -58,14 +62,16 @@ export class NotesService {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ title, content })
+                body: JSON.stringify({ title, content, isFixed, updatedAt })
             });
             const data = await response.json();
             return {
                 id: data.id,
                 title: data.title,
                 content: data.content,
-                createdAt: new Date(data.createdAt)
+                isFixed: data.isFixed,
+                createdAt: new Date(data.createdAt),
+                updatedAt: data.updatedAt,
             };
         } catch (err) {
             console.error("Error al crear la nota:", err);
@@ -74,7 +80,7 @@ export class NotesService {
     }
 
     // Actualizar una nota existente
-    async updateNote(id: string, { title, content }: NoteData): Promise<Note | undefined> {
+    async updateNote(id: string, { title, content, isFixed, updatedAt }: NoteData): Promise<Note | undefined> {
         try {
             const response = await fetch(`${this.ApiUrl}/${id}`, {
                 method: "PUT",
@@ -82,14 +88,16 @@ export class NotesService {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ title: title, content: content })
+                body: JSON.stringify({ title: title, content: content, isFixed: isFixed, updatedAt: updatedAt })
             });
             const data = await response.json();
             const updatedNote = {
                 id: data.id,
                 title: data.title,
                 content: data.content,
-                createdAt: new Date(data.createdAt)
+                isFixed: data.isFixed,
+                createdAt: new Date(data.createdAt),
+                updatedAt: new Date(data.updatedAt)
             };
             const index = this.notes.findIndex(n => n.id === updatedNote.id);
             if (index !== -1) {
@@ -114,7 +122,9 @@ export class NotesService {
                 id: data.id,
                 title: data.title,
                 content: data.content,
-                createdAt: new Date(data.createdAt)
+                isFixed: data.isFixed,
+                createdAt: new Date(data.createdAt),
+                updatedAt: data.updatedAt ? new Date(data.updatedAt) : null,
             };
             const index = this.notes.findIndex(n => n.id === note.id);
             if (index !== -1) {

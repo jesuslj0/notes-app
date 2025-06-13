@@ -60,7 +60,7 @@ export const Dashboard = () => {
                 </div>
 
                 {/* Botón de Logout */}
-                <div className="mt-auto md:mt-0 md:mr-4">
+                <div className="mt-auto md:mt-0 md:mr-4 flex flex-row justify-center">
                     <button onClick={handleLogout} className="rounded-md bg-red-700 text-sm hover:bg-red-600 transition-all ease-in-out duration-300 p-2">
                     Logout
                     </button>
@@ -70,7 +70,7 @@ export const Dashboard = () => {
             <div className="flex flex-col justify-center items-center h-auto p-4">
                 { isModalOpen && (
                     <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-60 flex items-center justify-center z-50">
-                        <div className="relative w-4/5 md:w-1/3 flex flex-col gap-4 bg-black p-4 rounded-lg">
+                        <div className="relative w-4/5 md:w-3/4 flex flex-col gap-4 bg-black p-4 rounded-lg">
                             <button className="absolute top-0 right-0 p-2"onClick={() => {
                                 setIsModalOpen(false);
                                 setEditingNote(EmptyNote);
